@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\TipsterController;
+use App\Models\Tipster;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,9 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard');    
     })->name('dashboard');
+
+    Route::resource('/tipsters', TipsterController::class);
+
 });
