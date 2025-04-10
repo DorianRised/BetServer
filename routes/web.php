@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ApuestaController;
 use App\Http\Controllers\TipsterController;
+use App\Http\Controllers\HomeController;
 use App\Models\Tipster;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -30,10 +32,13 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');    
-    })->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return Inertia::render('Dashboard');    
+    // })->name('dashboard');
+
+    Route::get('/dashboard', [HomeController::class, 'indexAdmin'])->name('dashboard');
 
     Route::resource('/tipsters', TipsterController::class);
+    Route::resource('/apuestas', ApuestaController::class);
 
 });
