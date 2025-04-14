@@ -16,7 +16,6 @@
                     <table id="apuestas-table" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Usuario</th>
                                 <th>Evento</th>
                                 <th>Cantidad</th>

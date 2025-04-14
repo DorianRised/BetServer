@@ -8,6 +8,8 @@ use App\Http\Controllers\AppBaseController;
 use App\Repositories\DeporteRepository;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Deporte;
 
 class DeporteController extends AppBaseController
 {
@@ -43,9 +45,16 @@ class DeporteController extends AppBaseController
      */
     public function store(CreateDeporteRequest $request)
     {
-        $input = $request->all();
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:50|unique:deportes',
+            'img_deporte' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
 
-        $deporte = $this->deporteRepository->create($input);
+        if ($request->hasFile('img_deporte')) {
+            $validated['img_deporte'] = $request->file('img_deporte')->store('deportes', 'public');
+        }
+
+        Deporte::create($validated);
 
         Flash::success('Deporte saved successfully.');
 
@@ -97,7 +106,19 @@ class DeporteController extends AppBaseController
             return redirect(route('deportes.index'));
         }
 
-        $deporte = $this->deporteRepository->update($request->all(), $id);
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:50|unique:deportes,nombre,'.$deporte->id,
+            'img_deporte' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        if ($request->hasFile('img_deporte')) {
+            if ($deporte->img_deporte) {
+                Storage::disk('public')->delete($deporte->img_deporte);
+            }
+            $validated['img_deporte'] = $request->file('img_deporte')->store('deportes', 'public');
+        }
+
+        $deporte->update($validated);
 
         Flash::success('Deporte updated successfully.');
 
@@ -117,6 +138,10 @@ class DeporteController extends AppBaseController
             Flash::error('Deporte not found');
 
             return redirect(route('deportes.index'));
+        }
+
+        if ($deporte->img_deporte) {
+            Storage::disk('public')->delete($deporte->img_deporte);
         }
 
         $this->deporteRepository->delete($id);

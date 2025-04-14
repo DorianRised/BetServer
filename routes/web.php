@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\ApuestaController;
 use App\Http\Controllers\TipsterController;
+use App\Http\Controllers\EventoController;
 use App\Http\Controllers\HomeController;
-use App\Models\Tipster;
+use App\Http\Controllers\DeporteController;
+use App\Http\Controllers\LigaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,5 +42,7 @@ Route::middleware([
 
     Route::resource('/tipsters', TipsterController::class);
     Route::resource('/apuestas', ApuestaController::class);
-
+    Route::resource('/eventos', EventoController::class);
+    Route::resource('/deportes', DeporteController::class);
+    Route::resource('/ligas', LigaController::class);
 });

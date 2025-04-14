@@ -36,3 +36,6 @@ Route::resource('ligas', App\Http\Controllers\API\LigaAPIController::class)
 
 Route::resource('grupos', App\Http\Controllers\API\GrupoAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('eventos', App\Http\Controllers\API\EventoAPIController::class)
+    ->except(['create', 'edit']);

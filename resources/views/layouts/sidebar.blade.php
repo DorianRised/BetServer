@@ -66,6 +66,12 @@
                     <ul class="filter-menu" aria-expanded="false">
                         <li><a href="{{route('apuestas.index')}}">Apuestas</a></li>
                     </ul>
+                    <ul class="filter-menu" aria-expanded="false">
+                        <li><a href="{{route('eventos.index')}}">Eventos</a></li>
+                    </ul>
+                    <ul class="filter-menu" aria-expanded="false">
+                        <li><a href="{{route('deportes.index')}}">Deportes</a></li>
+                    </ul>
                         <!-- <li><a href="users" data-key="t-usuarios">Usuarios</a></li>
                         <li><a href="clientes" data-key="t-clientes">Clientes</a></li>
                         <li><a href="vehiculos" data-key="t-vehiculos">Vehículos</a></li>
