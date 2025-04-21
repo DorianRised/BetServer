@@ -6,6 +6,8 @@ use App\Http\Controllers\EventoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DeporteController;
 use App\Http\Controllers\LigaController;
+use App\Http\Controllers\GrupoController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,13 +22,23 @@ use Inertia\Inertia;
 |
 */
 
+// Route::get('/', function () {
+    // return Inertia::render('Welcome', [
+    //     'canLogin' => Route::has('login'),
+    //     'canRegister' => Route::has('register'),
+    //     'laravelVersion' => Application::VERSION,
+    //     'phpVersion' => PHP_VERSION,
+    // ]);
+
+    
+// });
+
+
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
 });
 
 Route::middleware([
@@ -45,4 +57,7 @@ Route::middleware([
     Route::resource('/eventos', EventoController::class);
     Route::resource('/deportes', DeporteController::class);
     Route::resource('/ligas', LigaController::class);
+    Route::resource('/grupos', GrupoController::class);
+    Route::resource('/tipsters', TipsterController::class);
+    Route::resource('/usuarios', UserController::class);
 });

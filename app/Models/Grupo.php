@@ -9,7 +9,7 @@ class Grupo extends Model
     public $table = 'grupos';
 
     public $fillable = [
-        
+        'nombre', 
     ];
 
     protected $casts = [
@@ -20,5 +20,9 @@ class Grupo extends Model
         
     ];
 
+    public function tipsters()
+    {
+        return $this->hasMany(Tipster::class);
+    }
     
 }

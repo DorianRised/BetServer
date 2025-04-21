@@ -64,6 +64,9 @@
 
                     </a> -->
                     <ul class="filter-menu" aria-expanded="false">
+                        <li><a href="{{route('usuarios.index')}}">Usuarios</a></li>
+                    <ul>
+                    <ul class="filter-menu" aria-expanded="false">
                         <li><a href="{{route('apuestas.index')}}">Apuestas</a></li>
                     </ul>
                     <ul class="filter-menu" aria-expanded="false">
@@ -72,56 +75,24 @@
                     <ul class="filter-menu" aria-expanded="false">
                         <li><a href="{{route('deportes.index')}}">Deportes</a></li>
                     </ul>
-                        <!-- <li><a href="users" data-key="t-usuarios">Usuarios</a></li>
-                        <li><a href="clientes" data-key="t-clientes">Clientes</a></li>
-                        <li><a href="vehiculos" data-key="t-vehiculos">Vehículos</a></li>
-                        <li><a href="tipo-servicios" data-key="t-tipoServicio">Tipo de servicios</a></li>
-                        <li><a href="marcas" data-key="t-marcas">Marcas</a></li>
-                        <li><a href="sucursales" data-key="t-sucursales">Sucursales</a></li>
-                        <li><a href="empresas" data-key="t-empresas">Empresas</a></li>
-                </li>
-                @if (request()->is('dashboard') || request()->is('/'))
-                    <li class="menu-title" data-key="t-filtrosLabel">Filtros</li>
-
-                    <li>
-                        <a href="javascript: void(0);">
-                            <i class="icon nav-icon" data-eva="funnel-outline"></i>
-                            <span class="menu-item" data-key="t-filtros">filtros</span>
-                            <i class="icon nav-icon" data-eva="plus-outline" style="font-size: 36px; margin-left: 120px;"></i>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><select name="TipoVenta" id="TipoVenta" class="form-control" data-trigger>
-                                <option value="">Tipo de Venta</option>
-                            </select></li>
-                            <li><select name="marca" id="marca" class="form-control" data-trigger>
-                                <option value="">Marca</option>
-                            </select></li>
-                            <li><select name="sucursal" id="sucursal" class="form-control" data-trigger>
-                                <option value="">Sucursal</option>
-                            </select></li>
-                            <li><select name="modelo" id="modelo" class="form-control" data-trigger>
-                                <option value="">Modelo</option>
-                            </select></li>
-                            <li><select name="asesor" id="asesor" class="form-control" data-trigger>
-                                <option value="">Asesor</option>
-                            </select></li>
-                            <li><select name="tipoPago" id="tipoPago" class="form-control" data-trigger>
-                                <option value="">Tipo de pago</option>
-                            </select></li>
-                            <li>
-                            <p>Precio</p>
-                            </li> -->
-                        </ul>
-                    </li>
-                @endif 
-
-                <!-- <li id="cambio-tema" style="margin-top: 10%;">
-                    <a href="javascript: void(0);">
-                        <i class="icon nav-icon" data-eva="moon-outline"></i>
-                        <span class="menu-item" >Modo Dark</span>
-                    </a>
-                </li> -->
-            </ul> 
+                    <ul class="filter-menu" aria-expanded="false">
+                        <li><a href="{{route('ligas.index')}}">Ligas</a></li>
+                    </ul>
+                    <ul class="filter-menu" aria-expanded="false">
+                        <li><a href="{{route('grupos.index')}}">Grupos</a></li>
+                    </ul>
+                    <ul class="filter-menu" aria-expanded="false">
+                        <li><a href="{{route('tipsters.index')}}">Tipsters</a></li>
+                    </ul>
+                    
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                @csrf
+                                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();">Cerrar sesión</a>
+                            </form>
+                        </li>
+                    </ul>
+            </ul>
         </div>
         <!-- Sidebar -->
     </div>

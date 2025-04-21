@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateGrupoRequest;
 use App\Http\Requests\UpdateGrupoRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Grupo;
 use App\Repositories\GrupoRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -24,8 +25,9 @@ class GrupoController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $grupos = $this->grupoRepository->paginate(10);
+        // $grupos = $this->grupoRepository->paginate(10);
 
+        $grupos = Grupo::all();
         return view('grupos.index')
             ->with('grupos', $grupos);
     }
@@ -43,9 +45,12 @@ class GrupoController extends AppBaseController
      */
     public function store(CreateGrupoRequest $request)
     {
+        $request->validate([
+            'nombre' => 'required|string|max:100|unique:grupos'
+        ]);
         $input = $request->all();
 
-        $grupo = $this->grupoRepository->create($input);
+        Grupo::create($input);
 
         Flash::success('Grupo saved successfully.');
 
@@ -97,8 +102,14 @@ class GrupoController extends AppBaseController
             return redirect(route('grupos.index'));
         }
 
-        $grupo = $this->grupoRepository->update($request->all(), $id);
+        $request->validate([
+            'nombre' => 'required|string|max:100|unique:grupos,nombre,'.$grupo->id
+        ]);
+        
+        $input = $request->all();
 
+        Grupo::update($input);
+        
         Flash::success('Grupo updated successfully.');
 
         return redirect(route('grupos.index'));

@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateLigaRequest;
 use App\Http\Requests\UpdateLigaRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Deporte;
 use App\Repositories\LigaRepository;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Support\Facades\Storage;
+
 
 class LigaController extends AppBaseController
 {
@@ -35,7 +38,8 @@ class LigaController extends AppBaseController
      */
     public function create()
     {
-        return view('ligas.create');
+        $deportes = Deporte::all();
+        return view('ligas.create', compact('deportes'));
     }
 
     /**
@@ -43,9 +47,17 @@ class LigaController extends AppBaseController
      */
     public function store(CreateLigaRequest $request)
     {
-        $input = $request->all();
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:100',
+            'pais' => 'required|string|max:50',
+            'img_liga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
 
-        $liga = $this->ligaRepository->create($input);
+        if ($request->hasFile('img_liga')) {
+            $validated['img_liga'] = $request->file('img_liga')->store('ligas', 'public');
+        }
+
+        Liga::create($validated);
 
         Flash::success('Liga saved successfully.');
 
@@ -81,7 +93,8 @@ class LigaController extends AppBaseController
             return redirect(route('ligas.index'));
         }
 
-        return view('ligas.edit')->with('liga', $liga);
+        $deportes = Deporte::all();
+        return view('ligas.edit', compact('liga', 'deportes'));
     }
 
     /**
@@ -97,7 +110,21 @@ class LigaController extends AppBaseController
             return redirect(route('ligas.index'));
         }
 
-        $liga = $this->ligaRepository->update($request->all(), $id);
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:100',
+            'pais' => 'required|string|max:50',
+            'img_liga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        if ($request->hasFile('img_liga')) {
+            // Eliminar imagen anterior si existe
+            if ($liga->img_liga) {
+                Storage::disk('public')->delete($liga->img_liga);
+            }
+            $validated['img_liga'] = $request->file('img_liga')->store('ligas', 'public');
+        }
+
+        $liga->update($validated);
 
         Flash::success('Liga updated successfully.');
 
