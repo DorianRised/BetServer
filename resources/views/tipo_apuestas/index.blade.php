@@ -6,51 +6,47 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h1>Listado de Usuarios</h1>
-                    <a href="{{ route('usuarios.create') }}" class="btn btn-success">
-                        <i class="fas fa-plus"></i> Nuevo Usuario
+                    <h1>Tipos de Apuesta</h1>
+                    <a href="{{ route('tipo-apuestas.create') }}" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Nuevo Tipo
                     </a>
                 </div>
 
                 <div class="card-body">
-                    <table id="users-table" class="table table-striped table-bordered" style="width:100%">
+                    <table id="tipos-apuesta-table" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Rol</th>
-                                <th>Creado</th>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($users as $user)
+                            @foreach($tipoApuestas as $tipo)
                             <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $tipo->nombre }}</td>
+                                <td>{{ $tipo->codigo }}</td>
+                                <td>{{ $tipo->descripcion ?? 'N/A' }}</td>
                                 <td>
-                                    <span class="badge badge-{{ $user->role == 'admin' ? 'success' : 'primary' }}">
-                                        {{ ucfirst($user->role) }}
+                                    <span class="badge badge-{{ $tipo->activo ? 'success' : 'danger' }}">
+                                        {{ $tipo->activo ? 'Activo' : 'Inactivo' }}
                                     </span>
                                 </td>
-                                <td>{{ $user->created_at->format('d/m/Y H:i') }}</td>
                                 <td>
-                                    <a href="{{ url('users/'.$user->id) }}" class="btn btn-sm btn-info">
+                                    <a href="{{ route('tipo-apuestas.show', $tipo) }}" class="btn btn-sm btn-info">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    @can('users.edit')
-                                    <a href="{{ route('usuarios.edit', $user) }}" class="btn btn-sm btn-primary">
+                                    <a href="{{ route('tipo-apuestas.edit', $tipo) }}" class="btn btn-sm btn-primary">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    @endcan
-                                    @can('users.destroy')
-                                    <form action="{{ route('usuarios.destroy', $user) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('tipo-apuestas.destroy', $tipo) }}" method="POST" class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar este usuario?')">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar este tipo de apuesta?')">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
-                                    @endcan
                                 </td>
                             </tr>
                             @endforeach
@@ -70,11 +66,10 @@
 
 <script>
     $(document).ready(function() {
-        $('#users-table').DataTable({
+        $('#tipos-apuesta-table').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/Spanish.json"
             },
-            "order": [[3, "desc"]],
             "columnDefs": [
                 {
                     "targets": [4], // Columna de Acciones

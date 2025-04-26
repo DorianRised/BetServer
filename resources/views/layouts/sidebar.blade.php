@@ -84,6 +84,9 @@
                     <ul class="filter-menu" aria-expanded="false">
                         <li><a href="{{route('tipsters.index')}}">Tipsters</a></li>
                     </ul>
+                    <ul class="filter-menu" aria-expanded="false">
+                        <li><a href="{{route('tipo-apuestas.index')}}">Tipo apuestas</a></li>
+                    </ul>
                     
                         <li>
                             <form method="POST" action="{{ route('logout') }}" style="display: inline;">

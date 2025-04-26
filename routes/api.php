@@ -39,3 +39,6 @@ Route::resource('grupos', App\Http\Controllers\API\GrupoAPIController::class)
 
 Route::resource('eventos', App\Http\Controllers\API\EventoAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('tipo-apuestas', App\Http\Controllers\API\TipoApuestaAPIController::class)
+    ->except(['create', 'edit']);

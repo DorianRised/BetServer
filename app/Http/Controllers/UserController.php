@@ -34,7 +34,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente');
+        return redirect()->route('usuarios.index')->with('success', 'Usuario creado exitosamente');
     }
 
     public function show(User $user)
@@ -73,12 +73,12 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente');
+        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado exitosamente');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'Usuario eliminado exitosamente');
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado exitosamente');
     }
 }

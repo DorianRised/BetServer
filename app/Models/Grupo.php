@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Grupo extends Model
 {
-    public $table = 'grupos';
+    public $table = 'grupos_tipsters';
 
     public $fillable = [
         'nombre', 
