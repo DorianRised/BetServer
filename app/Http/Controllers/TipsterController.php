@@ -8,6 +8,9 @@ use App\Http\Controllers\AppBaseController;
 use App\Repositories\TipsterRepository;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Tipster;
+use App\Models\Grupo;
 
 class TipsterController extends AppBaseController
 {
@@ -124,5 +127,19 @@ class TipsterController extends AppBaseController
         Flash::success('Tipster deleted successfully.');
 
         return redirect(route('tipsters.index'));
+    }
+
+    public function tipstersPorGrupo($grupoId)
+    {
+        if ($grupoId == 0) {
+            // Todos los tipsters si no se selecciona grupo
+            $tipsters = Tipster::orderBy('nombre', 'asc')->get(['id', 'nombre']);
+        } else {
+            // Tipsters que pertenecen al grupo seleccionado
+            $grupo = Grupo::with('tipsters')->findOrFail($grupoId);
+            $tipsters = $grupo->tipsters()->orderBy('nombre', 'asc')->get(['id', 'nombre']);
+        }
+
+        return response()->json($tipsters);
     }
 }

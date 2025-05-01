@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Deporte;
+use App\Models\Liga;
 
 class DeporteController extends AppBaseController
 {
@@ -149,5 +150,14 @@ class DeporteController extends AppBaseController
         Flash::success('Deporte deleted successfully.');
 
         return redirect(route('deportes.index'));
+    }
+
+    public function ligasPorDeporte($deporteId)
+    {
+        $ligas = Liga::where('deporte_id', $deporteId)
+                    ->orderBy('nombre', 'asc')
+                    ->get(['id', 'nombre']);
+
+        return response()->json($ligas);
     }
 }

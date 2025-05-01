@@ -8,6 +8,12 @@ use App\Http\Controllers\AppBaseController;
 use App\Repositories\ApuestaRepository;
 use Illuminate\Http\Request;
 use App\Models\Apuesta;
+use App\Models\TipoApuesta;
+use App\Models\Evento;
+use App\Models\Tipster;
+use App\Models\Liga;
+use App\Models\Deporte;
+use App\Models\Grupo;
 use Flash;
 
 class ApuestaController extends AppBaseController
@@ -39,7 +45,14 @@ class ApuestaController extends AppBaseController
      */
     public function create()
     {
-        return view('apuestas.create');
+        $eventos = Evento::all();
+        $tipsters = Tipster::all();
+        $ligas = Liga::all();
+        $deportes = Deporte::all();
+        $grupos = Grupo::all();
+        $tipos = ['Simple', 'Combinada', 'Parlay'];
+        $tipoApuestas = TipoApuesta::all();
+        return view('apuestas.create', compact('eventos', 'tipsters', 'ligas', 'deportes', 'grupos', 'tipos', 'tipoApuestas'));
     }
 
     /**

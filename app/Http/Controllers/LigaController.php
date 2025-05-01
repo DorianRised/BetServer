@@ -10,7 +10,9 @@ use App\Repositories\LigaRepository;
 use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\Liga;
+use App\Models\Evento;
+use Carbon\Carbon;
 
 class LigaController extends AppBaseController
 {
@@ -151,5 +153,24 @@ class LigaController extends AppBaseController
         Flash::success('Liga deleted successfully.');
 
         return redirect(route('ligas.index'));
+    }
+
+    public function eventosPorLiga($ligaId)
+    {
+        $eventos = Evento::where('liga_id', $ligaId)
+                        ->orderBy('fecha_evento', 'asc')
+                        ->get(['id', 'nombre', 'fecha_evento']);
+
+        // Formatear los eventos para incluir la fecha legible
+        $eventosFormateados = $eventos->map(function ($evento) {
+            return [
+                'id' => $evento->id,
+                'nombre' => $evento->nombre,
+                'fecha_evento' => Carbon::parse($evento->fecha_evento)->format('Y-m-d H:i'),
+                'fecha_legible' => Carbon::parse($evento->fecha_evento)->format('d/m/Y H:i')
+            ];
+        });
+
+        return response()->json($eventosFormateados);
     }
 }
