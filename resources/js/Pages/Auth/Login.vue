@@ -1,12 +1,5 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import Checkbox from '@/Components/Checkbox.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
 
 defineProps({
     canResetPassword: Boolean,
@@ -14,77 +7,70 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
+    login: '',
     password: '',
-    remember: false,
 });
 
 const submit = () => {
-    form.transform(data => ({
-        ...data,
-        remember: form.remember ? 'on' : '',
-    })).post(route('login'), {
+    form.post(route('login'), {
         onFinish: () => form.reset('password'),
     });
 };
 </script>
 
 <template>
-    <Head title="Log in" />
+  <Head title="Iniciar sesión - TipstersBet" />
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
+  <div class="bg-[#0b0b0b] text-white min-h-[100dvh] w-screen flex items-center justify-center p-0 m-0">
+    <div class="flex flex-col justify-center items-center w-full h-full px-6">
+      <form @submit.prevent="submit" class="bg-[#121212] w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto rounded-xl p-6 sm:p-8 shadow-lg space-y-6">
+        <div class="flex justify-center">
+          <img src="/img/logo.png" alt="Logo TipstersBet" class="h-20" />
         </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+        <h2 class="text-3xl font-bold text-white-400 text-center">Iniciar sesión</h2>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-                <TextInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="current-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+        <div>
+          <label class="text-sm text-gray-400 block mb-1">Correo o usuario</label>
+          <input
+            v-model="form.login"
+            type="text"
+            name="login"
+            required
+            placeholder="Ej. usuario123 o correo@mail.com"
+            class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-[#1f1f1f] border border-gray-600 rounded-md text-white text-base sm:text-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-green-400"
+          />
+          <p v-if="form.errors.login" class="text-red-500 text-sm mt-1">{{ form.errors.login }}</p>
+        </div>
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
+        <div>
+          <label class="text-sm text-gray-400 block mb-1">Contraseña</label>
+          <input
+            v-model="form.password"
+            type="password"
+            name="password"
+            required
+            class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-[#1f1f1f] border border-gray-600 rounded-md text-white text-base sm:text-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-green-400"
+          />
+          <p v-if="form.errors.password" class="text-red-500 text-sm mt-1">{{ form.errors.password }}</p>
+        </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Forgot your password?
-                </Link>
+        <button
+          type="submit"
+          :disabled="form.processing"
+          class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 sm:py-3 rounded-lg text-base sm:text-lg transition-all duration-150"
+        >
+          Entrar
+        </button>
 
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
-            </div>
-        </form>
-    </AuthenticationCard>
+        <div class="text-sm text-center">
+          <Link v-if="canResetPassword" :href="route('password.request')" class="text-gray-400 hover:text-green-400 underline">¿Olvidaste tu contraseña?</Link>
+        </div>
+
+        <p class="text-sm text-gray-400 text-center">¿No tienes cuenta? 
+          <Link href="/register" class="text-green-400 hover:underline">Regístrate aquí</Link>
+        </p>
+      </form>
+    </div>
+  </div>
 </template>
