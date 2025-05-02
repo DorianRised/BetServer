@@ -152,12 +152,4 @@ class DeporteController extends AppBaseController
         return redirect(route('deportes.index'));
     }
 
-    public function ligasPorDeporte($deporteId)
-    {
-        $ligas = Liga::where('deporte_id', $deporteId)
-                    ->orderBy('nombre', 'asc')
-                    ->get(['id', 'nombre']);
-
-        return response()->json($ligas);
-    }
 }

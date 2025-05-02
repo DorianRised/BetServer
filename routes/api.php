@@ -2,11 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\DeporteController;
-use App\Http\Controllers\API\LigaController;
-use App\Http\Controllers\API\GrupoController;
-use App\Http\Controllers\API\TipsterController;
-use App\Http\Controllers\API\ApuestaController;
+use App\Http\Controllers\API\DeporteAPIController;
+use App\Http\Controllers\API\LigaAPIController;
+use App\Http\Controllers\API\GrupoAPIController;
+use App\Http\Controllers\API\TipsterAPIController;
+use App\Http\Controllers\API\ApuestaAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +51,6 @@ Route::resource('tipo-apuestas', App\Http\Controllers\API\TipoApuestaAPIControll
 Route::resource('parlays', App\Http\Controllers\API\ParlayAPIController::class)
     ->except(['create', 'edit']);
 
-Route::get('/deportes/{deporteId}/ligas', [DeporteController::class, 'ligasPorDeporte']);
-Route::get('/ligas/{ligaId}/eventos', [LigaController::class, 'eventosPorLiga']);
-Route::get('/grupos/{grupoId}/tipsters', [TipsterController::class, 'tipstersPorGrupo']);
+Route::get('/deportes/{deporteId}/ligas', [DeporteAPIController::class, 'ligasPorDeporte']);
+Route::get('/ligas/{ligaId}/eventos', [LigaAPIController::class, 'eventosPorLiga']);
+Route::get('/grupos/{grupoId}/tipsters', [TipsterAPIController::class, 'tipstersPorGrupo']);

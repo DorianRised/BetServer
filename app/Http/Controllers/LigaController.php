@@ -157,22 +157,5 @@ class LigaController extends AppBaseController
         return redirect(route('ligas.index'));
     }
 
-    public function eventosPorLiga($ligaId)
-    {
-        $eventos = Evento::where('liga_id', $ligaId)
-                        ->orderBy('fecha_evento', 'asc')
-                        ->get(['id', 'nombre', 'fecha_evento']);
-
-        // Formatear los eventos para incluir la fecha legible
-        $eventosFormateados = $eventos->map(function ($evento) {
-            return [
-                'id' => $evento->id,
-                'nombre' => $evento->nombre,
-                'fecha_evento' => Carbon::parse($evento->fecha_evento)->format('Y-m-d H:i'),
-                'fecha_legible' => Carbon::parse($evento->fecha_evento)->format('d/m/Y H:i')
-            ];
-        });
-
-        return response()->json($eventosFormateados);
-    }
+    
 }

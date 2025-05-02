@@ -134,17 +134,4 @@ class TipsterController extends AppBaseController
         return redirect(route('tipsters.index'));
     }
 
-    public function tipstersPorGrupo($grupoId)
-    {
-        if ($grupoId == 0) {
-            // Todos los tipsters si no se selecciona grupo
-            $tipsters = Tipster::orderBy('nombre', 'asc')->get(['id', 'nombre']);
-        } else {
-            // Tipsters que pertenecen al grupo seleccionado
-            $grupo = Grupo::with('tipsters')->findOrFail($grupoId);
-            $tipsters = $grupo->tipsters()->orderBy('nombre', 'asc')->get(['id', 'nombre']);
-        }
-
-        return response()->json($tipsters);
-    }
 }

@@ -9,6 +9,8 @@ use App\Repositories\DeporteRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Liga;
 
 /**
  * Class DeporteAPIController
@@ -104,5 +106,15 @@ class DeporteAPIController extends AppBaseController
         $deporte->delete();
 
         return $this->sendSuccess('Deporte deleted successfully');
+    }
+
+
+    public function ligasPorDeporte($deporteId)
+    {
+        $ligas = Liga::where('deporte_id', $deporteId)
+                    ->orderBy('nombre', 'asc')
+                    ->get(['id', 'nombre']);
+
+        return response()->json($ligas);
     }
 }
