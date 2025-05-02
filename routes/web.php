@@ -9,6 +9,7 @@ use App\Http\Controllers\LigaController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TipoApuestaController;
+use App\Http\Controllers\ParlayController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -62,4 +63,5 @@ Route::middleware([
     Route::resource('/tipsters', TipsterController::class);
     Route::resource('/usuarios', UserController::class);
     Route::resource('/tipo-apuestas', TipoApuestaController::class);
+    Route::resource('/parlays', ParlayController::class);
 });

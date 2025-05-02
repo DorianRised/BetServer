@@ -69,7 +69,7 @@
                                 <!-- Fecha del Evento (autocompletado al seleccionar evento) -->
                                 <div class="form-group mb-3" id="fecha-container" style="display: none;">
                                     <label for="fecha_evento" class="form-label">📅 Fecha del evento *</label>
-                                    <input type="datetime-local" class="form-control @error('fecha_evento') is-invalid @enderror" 
+                                    <input disabled type="datetime-local" class="form-control @error('fecha_evento') is-invalid @enderror" 
                                            id="fecha_evento" name="fecha_evento" value="{{ old('fecha_evento') }}" required readonly>
                                     @error('fecha_evento')
                                         <div class="invalid-feedback">
@@ -220,15 +220,23 @@
 
                                 <!-- Parlay ID -->
                                 <div class="form-group mb-3">
-                                    <label for="parlay_id" class="form-label">🧩 ID Parlay</label>
-                                    <input type="text" class="form-control @error('parlay_id') is-invalid @enderror" 
-                                           id="parlay_id" name="parlay_id" value="{{ old('parlay_id') }}">
-                                    @error('parlay_id')
+                                    <select class="form-control @error('parlay_ids') is-invalid @enderror" 
+                                            id="parlay_ids" name="parlay_ids[]" multiple>
+                                        @foreach($parlays as $parlay)
+                                            <option value="{{ $parlay->id }}" {{ (collect(old('parlay_ids'))->contains($parlay->id)) ? 'selected' : '' }}>
+                                                {{ $parlay->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <small class="form-text text-muted">Puede seleccionar varios parlays si aplica.</small>
+                                    @error('parlay_ids')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
+
+
 
                                 <!-- Resultado -->
                                 <div class="form-group mb-3">

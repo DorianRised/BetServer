@@ -9,7 +9,13 @@ class Parlay extends Model
     public $table = 'parlays';
 
     public $fillable = [
-        'nombre'
+        'nombre', 
+        'user_id',
+        'tipster_id',
+        'fecha',
+        'monto',
+        'ganancia_potencial',
+        'estado'
     ];
 
     protected $casts = [
@@ -20,5 +26,16 @@ class Parlay extends Model
         'nombre' => 'required'
     ];
 
-    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function tipster()
+    {
+        return $this->belongsTo(Tipster::class);
+    }
+    public function apuestas()
+    {
+        return $this->belongsToMany(Apuesta::class, 'parlay_apuestas');
+    }
 }

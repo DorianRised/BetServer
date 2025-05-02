@@ -8,6 +8,9 @@ use App\Http\Controllers\AppBaseController;
 use App\Repositories\ParlayRepository;
 use Illuminate\Http\Request;
 use Flash;
+use App\Models\Parlay;
+use App\Models\User;
+use App\Models\Tipster;
 
 class ParlayController extends AppBaseController
 {
@@ -24,7 +27,11 @@ class ParlayController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $parlays = $this->parlayRepository->paginate(10);
+        // $parlays = $this->parlayRepository->paginate(10);
+
+        $parlays = Parlay::with('apuestas')->where('user_id', auth()->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('parlays.index')
             ->with('parlays', $parlays);
@@ -35,7 +42,9 @@ class ParlayController extends AppBaseController
      */
     public function create()
     {
-        return view('parlays.create');
+        $users = User::all();
+        $tipsters = Tipster::all();
+        return view('parlays.create', compact('users', 'tipsters'));
     }
 
     /**
@@ -43,11 +52,20 @@ class ParlayController extends AppBaseController
      */
     public function store(CreateParlayRequest $request)
     {
-        $input = $request->all();
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'tipster_id' => 'required|exists:tipsters,id',
+            'nombre' => 'required|string|max:255',
+        ]);
 
-        $parlay = $this->parlayRepository->create($input);
+        $parlay = Parlay::create([
+            'user_id' => $validated['user_id'],
+            'tipster_id' => $validated['tipster_id'],
+            'nombre' => $validated['nombre'],
+            'estado' => 'pendiente',
+        ]);
 
-        Flash::success('Parlay saved successfully.');
+        Flash::success('Parlay creado correctamente.');
 
         return redirect(route('parlays.index'));
     }
@@ -74,6 +92,8 @@ class ParlayController extends AppBaseController
     public function edit($id)
     {
         $parlay = $this->parlayRepository->find($id);
+        $users = User::all();
+        $tipsters = Tipster::all();
 
         if (empty($parlay)) {
             Flash::error('Parlay not found');
@@ -81,7 +101,7 @@ class ParlayController extends AppBaseController
             return redirect(route('parlays.index'));
         }
 
-        return view('parlays.edit')->with('parlay', $parlay);
+        return view('parlays.edit')->with('parlay', $parlay)->with('users', $users)->with('tipsters', $tipsters);
     }
 
     /**

@@ -28,7 +28,7 @@ class ParlayAPIController extends AppBaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $parlays = $this->parlayRepository->all(
+        $parlays = Parlay::all(
             $request->except(['skip', 'limit']),
             $request->get('skip'),
             $request->get('limit')

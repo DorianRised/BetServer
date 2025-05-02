@@ -9,7 +9,21 @@ class Apuesta extends Model
     public $table = 'apuestas';
 
     public $fillable = [
-        
+        'deporte_id',
+        'liga_id',
+        'evento_id',
+        'fecha_evento',
+        'grupo_id',
+        'tipster_id',
+        'tipo',
+        'apuesta',
+        'tipo_apuesta_id',
+        'monto',
+        'cuota',
+        'ganancia_total',
+        'parlay_id',
+        'resultado',
+        'user_id',
     ];
 
     protected $casts = [
@@ -20,5 +34,11 @@ class Apuesta extends Model
         
     ];
 
+    public function parlays()
+    {
+        return $this->belongsToMany(Parlay::class, 'parlay_apuestas')
+                    ->withPivot('cuota', 'resultado')
+                    ->withTimestamps();
+    }
     
 }
