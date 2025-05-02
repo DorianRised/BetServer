@@ -19,6 +19,7 @@ class Tipster extends Model
         'roi', 
         'user_id',
         'grupo_id',
+        'pais',
     ];
     
     protected $dates = ['fecha_registro', 'created_at', 'updated_at'];

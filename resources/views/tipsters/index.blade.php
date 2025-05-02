@@ -18,10 +18,8 @@
                             <tr>
                                 <th>Nombre</th>
                                 <th>Usuario</th>
+                                <th>Grupo</th>
                                 <th>País</th>
-                                <th>Fecha Registro</th>
-                                <th>Bank Actual</th>
-                                <th>ROI</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -30,12 +28,8 @@
                             <tr>
                                 <td>{{ $tipster->nombre }}</td>
                                 <td>{{ $tipster->user->name }}</td>
+                                <td>{{ $tipster->grupo->nombre }}</td>
                                 <td>{{ $tipster->pais }}</td>
-                                <td>{{ \Carbon\Carbon::parse($tipster->fecha_registro)->format('d/m/Y') }}</td>
-                                <td class="text-right">{{ $tipster->bank_formateado }}</td>
-                                <td class="{{ $tipster->roi >= 0 ? 'text-success' : 'text-danger' }}">
-                                    {{ $tipster->roi_formateado }}
-                                </td>
                                 <td>
                                     <a href="{{ route('tipsters.show', $tipster) }}" class="btn btn-sm btn-info">
                                         <i class="fas fa-eye"></i>
@@ -75,17 +69,7 @@
             "order": [[3, "desc"]],
             "columnDefs": [
                 {
-                    "targets": [4, 5], // Columnas numéricas
-                    "type": "num",
-                    "render": function(data, type) {
-                        if (type === 'display' || type === 'filter') {
-                            return data.replace(/[$,%]/g, '');
-                        }
-                        return data;
-                    }
-                },
-                {
-                    "targets": [6], // Columna de Acciones
+                    "targets": [4], // Columna de Acciones
                     "orderable": false,
                     "searchable": false
                 }

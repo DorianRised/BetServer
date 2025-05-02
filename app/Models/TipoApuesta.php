@@ -9,7 +9,10 @@ class TipoApuesta extends Model
     public $table = 'tipo_apuestas';
 
     public $fillable = [
-        'nombre'
+        'nombre',
+        'descripcion',
+        'codigo',
+        'activo',    
     ];
 
     protected $casts = [

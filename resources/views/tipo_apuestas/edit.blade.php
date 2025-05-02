@@ -44,9 +44,8 @@
                         </div>
 
                         <div class="form-group form-check">
-                            <input type="checkbox" name="activo" id="activo" 
-                                   class="form-check-input @error('activo') is-invalid @enderror" 
-                                   {{ old('activo', $tipoApuesta->activo) ? 'checked' : '' }}>
+                        <input type="hidden" name="activo" value="0">
+                        <input type="checkbox" name="activo" value="1" {{ $tipoApuesta->activo ? 'checked' : '' }}>
                             <label class="form-check-label" for="activo">Activo</label>
                             @error('activo')
                                 <div class="invalid-feedback">{{ $message }}</div>

@@ -46,7 +46,7 @@ class GrupoController extends AppBaseController
     public function store(CreateGrupoRequest $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:100|unique:grupos'
+            'nombre' => 'required|string|max:100|unique:grupos_tipsters'
         ]);
         $input = $request->all();
 
@@ -103,7 +103,7 @@ class GrupoController extends AppBaseController
         }
 
         $request->validate([
-            'nombre' => 'required|string|max:100|unique:grupos,nombre,'.$grupo->id
+            'nombre' => 'required|string|max:100|unique:grupos_tipsters,nombre,'.$grupo->id
         ]);
         
         $input = $request->all();

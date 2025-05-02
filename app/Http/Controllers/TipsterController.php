@@ -11,6 +11,7 @@ use Flash;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Tipster;
 use App\Models\Grupo;
+use App\Models\User;
 
 class TipsterController extends AppBaseController
 {
@@ -38,7 +39,9 @@ class TipsterController extends AppBaseController
      */
     public function create()
     {
-        return view('tipsters.create');
+        $grupos = Grupo::orderBy('nombre', 'asc')->get(['id', 'nombre']);
+        $users = User::orderBy('name', 'asc')->get(['id', 'name']);
+        return view('tipsters.create', compact('grupos', 'users'));
     }
 
     /**
@@ -77,6 +80,8 @@ class TipsterController extends AppBaseController
     public function edit($id)
     {
         $tipster = $this->tipsterRepository->find($id);
+        $grupos = Grupo::orderBy('nombre', 'asc')->get(['id', 'nombre']);
+        $users = User::orderBy('name', 'asc')->get(['id', 'name']);
 
         if (empty($tipster)) {
             Flash::error('Tipster not found');
@@ -84,7 +89,7 @@ class TipsterController extends AppBaseController
             return redirect(route('tipsters.index'));
         }
 
-        return view('tipsters.edit')->with('tipster', $tipster);
+        return view('tipsters.edit')->with('tipster', $tipster)->with('grupos', $grupos)->with('users', $users);
     }
 
     /**

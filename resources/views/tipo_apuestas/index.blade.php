@@ -30,8 +30,8 @@
                                 <td>{{ $tipo->codigo }}</td>
                                 <td>{{ $tipo->descripcion ?? 'N/A' }}</td>
                                 <td>
-                                    <span class="badge badge-{{ $tipo->activo ? 'success' : 'danger' }}">
-                                        {{ $tipo->activo ? 'Activo' : 'Inactivo' }}
+                                    <span class="badge bg-{{ $tipo->activo == 1 ? 'success' : 'danger' }}">
+                                        {{ $tipo->activo == 1 ? 'Activo' : 'Inactivo' }}
                                     </span>
                                 </td>
                                 <td>

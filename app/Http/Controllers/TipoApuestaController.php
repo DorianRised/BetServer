@@ -67,7 +67,7 @@ class TipoApuestaController extends AppBaseController
         if (empty($tipoApuesta)) {
             Flash::error('Tipo Apuesta not found');
 
-            return redirect(route('tipoApuestas.index'));
+            return redirect(route('tipo-apuestas.index'));
         }
 
         return view('tipo_apuestas.show')->with('tipoApuesta', $tipoApuesta);
@@ -83,7 +83,7 @@ class TipoApuestaController extends AppBaseController
         if (empty($tipoApuesta)) {
             Flash::error('Tipo Apuesta not found');
 
-            return redirect(route('tipoApuestas.index'));
+            return redirect(route('tipo-apuestas.index'));
         }
 
         return view('tipo_apuestas.edit')->with('tipoApuesta', $tipoApuesta);
@@ -99,14 +99,14 @@ class TipoApuestaController extends AppBaseController
         if (empty($tipoApuesta)) {
             Flash::error('Tipo Apuesta not found');
 
-            return redirect(route('tipoApuestas.index'));
+            return redirect(route('tipo-apuestas.index'));
         }
 
         $tipoApuesta = $this->tipoApuestaRepository->update($request->all(), $id);
 
         Flash::success('Tipo Apuesta updated successfully.');
 
-        return redirect(route('tipoApuestas.index'));
+        return redirect(route('tipo-apuestas.index'));
     }
 
     /**
@@ -121,13 +121,13 @@ class TipoApuestaController extends AppBaseController
         if (empty($tipoApuesta)) {
             Flash::error('Tipo Apuesta not found');
 
-            return redirect(route('tipoApuestas.index'));
+            return redirect(route('tipo-apuestas.index'));
         }
 
         $this->tipoApuestaRepository->delete($id);
 
         Flash::success('Tipo Apuesta deleted successfully.');
 
-        return redirect(route('tipoApuestas.index'));
+        return redirect(route('tipo-apuestas.index'));
     }
 }

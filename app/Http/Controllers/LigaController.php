@@ -52,7 +52,8 @@ class LigaController extends AppBaseController
         $validated = $request->validate([
             'nombre' => 'required|string|max:100',
             'pais' => 'required|string|max:50',
-            'img_liga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'img_liga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'deporte_id' => 'required|exists:deportes,id',
         ]);
 
         if ($request->hasFile('img_liga')) {
@@ -115,7 +116,8 @@ class LigaController extends AppBaseController
         $validated = $request->validate([
             'nombre' => 'required|string|max:100',
             'pais' => 'required|string|max:50',
-            'img_liga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'img_liga' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'deporte_id' => 'required|exists:deportes,id',
         ]);
 
         if ($request->hasFile('img_liga')) {

@@ -18,6 +18,7 @@
                             <tr>
                                 <th>Nombre</th>
                                 <th>País</th>
+                                <th>Deporte</th>
                                 <th>Imagen</th>
                                 <th>Creado</th>
                                 <th>Acciones</th>
@@ -28,6 +29,7 @@
                             <tr>
                                 <td>{{ $liga->nombre }}</td>
                                 <td>{{ $liga->pais }}</td>
+                                <td>{{$liga->deporte->nombre ?? 'No tiene deporte'}}</td>
                                 <td>
                                     @if($liga->img_liga)
                                         <img src="{{ $liga->imagen_url }}" alt="{{ $liga->nombre }}" width="50" class="img-thumbnail">
