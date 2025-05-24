@@ -70,6 +70,9 @@
                         <li><a href="{{route('apuestas.index')}}">Apuestas</a></li>
                     </ul>
                     <ul class="filter-menu" aria-expanded="false">
+                        <li><a href="{{route('equipos.index')}}">Equipos</a></li>
+                    </ul>
+                    <ul class="filter-menu" aria-expanded="false">
                         <li><a href="{{route('eventos.index')}}">Eventos</a></li>
                     </ul>
                     <ul class="filter-menu" aria-expanded="false">
@@ -90,6 +93,7 @@
                     <ul class="filter-menu" aria-expanded="false">
                         <li><a href="{{route('parlays.index')}}">Parlays</a></li>
                     </ul>
+                  
                     
                         <li>
                             <form method="POST" action="{{ route('logout') }}" style="display: inline;">

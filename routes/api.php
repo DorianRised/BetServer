@@ -7,6 +7,7 @@ use App\Http\Controllers\API\LigaAPIController;
 use App\Http\Controllers\API\GrupoAPIController;
 use App\Http\Controllers\API\TipsterAPIController;
 use App\Http\Controllers\API\ApuestaAPIController;
+use App\Http\Controllers\API\EventoAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,14 @@ Route::resource('tipo-apuestas', App\Http\Controllers\API\TipoApuestaAPIControll
 Route::resource('parlays', App\Http\Controllers\API\ParlayAPIController::class)
     ->except(['create', 'edit']);
 
+Route::get('/ligas-por-deporte/{deporte}', [EventoAPIController::class, 'ligasPorDeporte']);
+Route::get('/equipos-por-deporte/{deporte}', [EventoAPIController::class, 'equiposPorDeporte']);
+
+
+
 Route::get('/deportes/{deporteId}/ligas', [DeporteAPIController::class, 'ligasPorDeporte']);
 Route::get('/ligas/{ligaId}/eventos', [LigaAPIController::class, 'eventosPorLiga']);
 Route::get('/grupos/{grupoId}/tipsters', [TipsterAPIController::class, 'tipstersPorGrupo']);
+
+Route::resource('equipos', App\Http\Controllers\API\EquipoAPIController::class)
+    ->except(['create', 'edit']);

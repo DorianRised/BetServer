@@ -33,7 +33,7 @@
                                         {{ ucfirst($user->role) }}
                                     </span>
                                 </td>
-                                <td>{{ $user->created_at->format('d/m/Y H:i') }}</td>
+                                <td>{{ $user->created_at ? $user->created_at->format('d/m/Y H:i') : 'N/A' }}</td>
                                 <td>
                                     <a href="{{ url('users/'.$user->id) }}" class="btn btn-sm btn-info">
                                         <i class="fas fa-eye"></i>

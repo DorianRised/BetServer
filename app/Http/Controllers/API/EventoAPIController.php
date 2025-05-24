@@ -9,6 +9,8 @@ use App\Repositories\EventoRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Liga;
+use App\Models\Equipo;
 
 /**
  * Class EventoAPIController
@@ -104,5 +106,17 @@ class EventoAPIController extends AppBaseController
         $evento->delete();
 
         return $this->sendSuccess('Evento deleted successfully');
+    }
+
+    public function ligasPorDeporte($deporteId)
+    {
+        $ligas = Liga::where('deporte_id', $deporteId)->get();
+        return response()->json($ligas);
+    }
+
+    public function equiposPorDeporte($deporteId)
+    {
+        $ligas = Equipo::where('deporte_id', $deporteId)->get();
+        return response()->json($ligas);
     }
 }

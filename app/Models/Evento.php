@@ -12,7 +12,9 @@ class Evento extends Model
         'nombre',
         'liga_id',
         'deporte_id',
-        'fecha'
+        'fecha', 
+        'equipo_visitante_id',
+        'equipo_local_id',
     ];
 
     protected $casts = [
@@ -26,7 +28,14 @@ class Evento extends Model
         'fecha' => 'required'
     ];
 
-    
+    public function equipoVisitante()
+    {
+        return $this->belongsTo(Equipo::class, 'equipo_visitante_id');
+    }
+    public function equipoLocal()
+    {
+        return $this->belongsTo(Equipo::class, 'equipo_local_id');
+    }
     public function liga()
     {
         return $this->belongsTo(Liga::class);

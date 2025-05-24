@@ -28,11 +28,18 @@ class ApuestaAPIController extends AppBaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $apuestas = $this->apuestaRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
-        );
+        // $apuestas = $this->apuestaRepository->all(
+        //     $request->except(['skip', 'limit']),
+        //     $request->get('skip'),
+        //     $request->get('limit')
+        // );
+
+        $apuestas = Apuesta::all();
+
+        foreach ($apuestas as $apuesta) {
+            // $apuesta->parlays = $apuesta->parlays()->get();
+            
+        }
 
         return $this->sendResponse($apuestas->toArray(), 'Apuestas retrieved successfully');
     }

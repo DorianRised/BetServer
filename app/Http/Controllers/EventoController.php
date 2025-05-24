@@ -38,9 +38,8 @@ class EventoController extends AppBaseController
      */
     public function create()
     {
-        $ligas = Liga::all();
         $deportes = Deporte::all();
-        return view('eventos.create', compact('ligas', 'deportes'));
+        return view('eventos.create', compact('deportes'));
     }
 
     /**
@@ -53,6 +52,8 @@ class EventoController extends AppBaseController
             'liga_id' => 'required|exists:ligas,id',
             'deporte_id' => 'required|exists:deportes,id',
             'fecha' => 'required|date',
+            'equipo_local_id' => 'required|exists:equipos,id',
+            'equipo_visitante_id' => 'required|exists:equipos,id',
         ]);
     
         Evento::create($validated);
